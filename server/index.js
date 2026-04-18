@@ -30,5 +30,5 @@ app.use('/api/tests', testsRoutes)
 app.use('/api/reviews', reviewsRoutes)
 
 app.listen(PORT, () => {
-  console.log(`GUIDE ME server running on http://localhost:${PORT}`)
+  console.log(`GUIDE ME server running on port ${PORT}`)
 })
