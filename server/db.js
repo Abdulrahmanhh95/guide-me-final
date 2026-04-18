@@ -1,3 +1,4 @@
+import fs from 'fs'
 import { Low } from 'lowdb'
 import { JSONFile } from 'lowdb/node'
 import path from 'path'
@@ -5,7 +6,11 @@ import { fileURLToPath } from 'url'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
-const file = path.join(__dirname, 'data', 'db.json')
+
+// 👇 أضف هذا
+const dataDir = path.join(__dirname, 'data')
+const file = path.join(dataDir, 'db.json')
+
 const adapter = new JSONFile(file)
 
 export const db = new Low(adapter, {
@@ -16,8 +21,20 @@ export const db = new Low(adapter, {
   reviews: []
 })
 
+// 👇 عدل هذا
 export async function initDb() {
+  // تأكد المجلد موجود
+  if (!fs.existsSync(dataDir)) {
+    fs.mkdirSync(dataDir, { recursive: true })
+  }
+
   await db.read()
-  db.data ||= { users: [], bookings: [], notifications: [], tests: [], reviews: [] }
+  db.data ||= {
+    users: [],
+    bookings: [],
+    notifications: [],
+    tests: [],
+    reviews: []
+  }
   await db.write()
 }
