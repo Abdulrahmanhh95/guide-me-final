@@ -1,4 +1,4 @@
-const API_BASE = window.API_BASE || 'https://guide-me-server-production.up.railway.app/api'
+const API_BASE = window.API_BASE || 'https://guide-me-server-production.up.railway.app'
 
 async function request(path, options = {}) {
   const res = await fetch(`${API_BASE}${path}`, {
